@@ -9,7 +9,7 @@ import createStore from './store'
 let store = createStore();
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
-
+import './static/style';
 let root = document.getElementById('app');
 ReactDOM.render(
 	<Provider store={store}>
