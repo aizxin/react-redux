@@ -7,18 +7,7 @@ import debounce from 'lodash.debounce';
 import classNames from 'classnames';
 class OrderApp extends Component {
     constructor(props) {
-    super(props);
-
-    this.onScroll = debounce(() => {
-      const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-      const clientHeight = document.documentElement.clientHeight;
-      if (scrollTop >= clientHeight) {
-        this.setState({ isFirstFrame: false });
-      } else {
-        this.setState({ isFirstFrame: true });
-      }
-    }, 100);
-
+  super(props);
     this.state = {
       menuMode: 'horizontal',
       isFirstFrame: true,
@@ -36,26 +25,18 @@ class OrderApp extends Component {
         this.setState({ menuMode: 'horizontal' });
       },
     });
+    const loadingNode = document.getElementById('ant-site-loading');
+    if (loadingNode) {
+      this.timer = setTimeout(() => {
+        loadingNode.parentNode.removeChild(loadingNode);
+      }, 5000);
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll);
-  }
+    clearTimeout(this.timer);
 
-  handleSearch(value) {
-    this.context.router.push({ pathname: `${value}/` });
-  }
-
-  handleSelectFilter(value, option) {
-    return option.props['data-label'].indexOf(value.toLowerCase()) > -1;
-  }
-
-  handleLangChange(){
-    if (typeof localStorage !== 'undefined') {
-      const locale = this.context.intl.locale === 'zh-CN' ? 'en-US' : 'zh-CN';
-      localStorage.setItem('locale', locale);
-      location.reload();
-    }
   }
 
   render() {
@@ -114,8 +95,6 @@ class OrderApp extends Component {
             </Link>
           </Col>
           <Col lg={20} md={18} sm={17} xs={0} style={{ display: 'block' }}>
-            <div id="search-box">
-            </div>
             {menuMode === 'horizontal' ? menu : null}
           </Col>
         </Row>
