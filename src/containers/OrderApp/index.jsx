@@ -1,106 +1,13 @@
 'use strict';
 import React, { Component } from 'react';
-import {Router, Route, IndexRoute, browserHistory, Link} from 'react-router';
-import { Select, Menu, Row, Col, Icon, Button, Popover } from 'antd';
-import enquire from 'enquire.js';
-import debounce from 'lodash.debounce';
-import classNames from 'classnames';
+import { Header } from '../../components';
+
 class OrderApp extends Component {
-    constructor(props) {
-  super(props);
-    this.state = {
-      menuMode: 'horizontal',
-      isFirstFrame: true,
-    };
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.onScroll);
-
-    enquire.register('only screen and (min-width: 320px) and (max-width: 940px)', {
-      match: () => {
-        this.setState({ menuMode: 'inline' });
-      },
-      unmatch: () => {
-        this.setState({ menuMode: 'horizontal' });
-      },
-    });
-    const loadingNode = document.getElementById('ant-site-loading');
-    if (loadingNode) {
-      this.timer = setTimeout(() => {
-        loadingNode.parentNode.removeChild(loadingNode);
-      }, 5000);
-    }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
-    clearTimeout(this.timer);
-
-  }
-
   render() {
-    const { location } = this.props;
-    const module = location.pathname.replace(/\/$/, '')
-            .split('/').slice(0, -1)
-            .join('/');
-    let activeMenuItem = module || 'home';
-    if (activeMenuItem === 'components' || location.pathname === 'changelog') {
-      activeMenuItem = 'docs/react';
-    }
-
-    const headerClassName = classNames({
-      clearfix: true,
-      'home-nav-white': !this.state.isFirstFrame,
-    });
-
-    const menuMode = this.state.menuMode;
-    const menu = [
-      <Menu mode={menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
-          <Menu.Item key="home">
-            <Link to="/">
-              首页
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="components">
-            <Link to="/user">
-              美食
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="travel">
-            <Link to="/travel">
-              旅游
-            </Link>
-          </Menu.Item>
-      </Menu>,
-    ];
+    const { children, ...restProps } = this.props;
     return (
-      <header id="header" className={headerClassName}>
-        <Popover
-          overlayClassName="nav"
-          placement="bottomRight"
-          content={menuMode === 'inline' ? menu : null}
-          trigger="click"
-        >
-          <Icon
-            className="nav-phone-icon"
-            type="menu"
-          />
-        </Popover>
-        <Row>
-          <Col lg={4} md={6} sm={7} xs={24}>
-            <Link to="/" id="logo">
-              <img alt="logo" src="https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg" />
-              <span>Ant Design</span>
-            </Link>
-          </Col>
-          <Col lg={20} md={18} sm={17} xs={0} style={{ display: 'block' }}>
-            {menuMode === 'horizontal' ? menu : null}
-          </Col>
-        </Row>
-      </header>
+      <Header {...restProps}/>
     );
   }
 }
-
 export default OrderApp;

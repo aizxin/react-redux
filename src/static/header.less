@@ -1,4 +1,5 @@
 @header-height: 80px;
+@margin-left-right: 150px;
 #header {
     transition: opacity 0.5s;
     background: #fff;
@@ -41,30 +42,14 @@
     text-transform: uppercase;
 }
 
-#search-box {
-    border-left: 1px solid #EBEDEE;
-    float: left;
-    height: 22px;
-    line-height: 22px;
-    padding-left: 30px;
-    margin: 29px auto 0;
-}
-
-#search-box .ant-select {
-    font-size: 14px;
-    margin-top: -3px;
-    width: 230px;
-}
-
-#search-box .ant-select-selection {
-    border: 0;
-    box-shadow: none;
-}
-
 .lang {
     float: right;
     margin-top: 29px;
     margin-left: 12px;
+}
+
+#nav-wo {
+    margin-right: @margin-left-right;
 }
 
 #nav {
@@ -107,3 +92,27 @@
         right: 16px;
     }
 }
+
+#search-box {
+    border-left: 1px solid #EBEDEE;
+    float: right;
+    height: 22px;
+    line-height: 22px;
+    padding-left: 10px;
+    margin: 29px auto 0;
+    cursor: pointer;
+}
+
+#search-box i {
+    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+#search-box i:after {
+    opacity: 1;
+    top: 0;
+}
+
+// #search-box .ant-select-selection {
+//     border: 0;
+//     box-shadow: none;
+// }
