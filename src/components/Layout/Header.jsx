@@ -39,15 +39,13 @@ class Header extends Component {
   }
   render() {
     const { location } = this.props;
-    const module = location.pathname.split('/').slice(0, -1)
-            .join('/');
+    const module = location.pathname.replace(/\/$/, '')
+            .split('/').slice(1).join('/');
     
     let activeMenuItem = module || 'home';
-    if (activeMenuItem === 'components' || location.pathname === 'changelog') {
-      activeMenuItem = 'docs/react';
-    }
-    console.log(location.pathname)
-    console.log(module)
+    // if (activeMenuItem === 'components' || location.pathname === 'changelog') {
+    //   activeMenuItem = 'docs/react';
+    // }
     const headerClassName = classNames({
       clearfix: true,
       'home-nav-white': !this.state.isFirstFrame,
@@ -61,7 +59,7 @@ class Header extends Component {
               首页
             </Link>
           </Menu.Item>
-          <Menu.Item key="components">
+          <Menu.Item key="user">
             <Link to="/user">
               美食
             </Link>
@@ -87,13 +85,13 @@ class Header extends Component {
           />
         </Popover>
         <Row>
-          <Col lg={4} md={6} sm={7} xs={22}>
+          <Col lg={5} md={7} sm={8} xs={22}>
             <Link to="/" id="logo">
               <img alt="logo" src="https://t.alipayobjects.com/images/rmsweb/T1B9hfXcdvXXXXXXXX.svg" />
               <span>Ant Design</span>
             </Link>
           </Col>
-          <Col lg={20} md={18} sm={17} xs={2} style={{ display: 'block' }}>
+          <Col lg={19} md={17} sm={16} xs={2} style={{ display: 'block' }}>
               <div id="nav-wo">
                 <Search />
                 {menuMode === 'horizontal' ? menu : null}
