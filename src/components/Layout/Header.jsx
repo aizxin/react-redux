@@ -39,14 +39,15 @@ class Header extends Component {
   }
   render() {
     const { location } = this.props;
-    const module = location.pathname.replace(/\/$/, '')
-            .split('/').slice(0, -1)
+    const module = location.pathname.split('/').slice(0, -1)
             .join('/');
+    
     let activeMenuItem = module || 'home';
     if (activeMenuItem === 'components' || location.pathname === 'changelog') {
       activeMenuItem = 'docs/react';
     }
-
+    console.log(location.pathname)
+    console.log(module)
     const headerClassName = classNames({
       clearfix: true,
       'home-nav-white': !this.state.isFirstFrame,
